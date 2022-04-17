@@ -1,0 +1,59 @@
+Create database store;
+use store;
+create table countries(
+id int primary key ,
+name varchar(20) NOT NULL,
+continent_name varchar(20),
+UNIQUE (continent_name)
+);
+create table users(
+id int primary key ,
+full_name varchar(20),
+email varchar(20),
+gender char(1) CHECK(gender='m' or gender='f'),
+data_of_birth varchar(15),
+Create_at datetime ,
+country_code int,
+foreign key (country_code) references countries(code),
+UNIQUE (email)
+);
+create table products(
+id int primary key ,
+name varchar(10) NOT NULL,
+price int DEFAULT 0,
+status varchar(10)CHECK(status='valid' or status='expired'),
+Create_at datetime
+);
+create table order_products(
+order_id int  ,
+product_id int ,
+quantity int DEFAULT 0,
+primary key (order_id ,product_id),
+foreign key (order_id) references orders(id),
+foreign key (product_id) references products(id)
+);
+create table orders(
+id int primary key ,
+user_id int,
+status varchar(6) CHECK(status='start' or status='finish'),
+Create_at datetime,
+foreign key (user_id) references users(id)
+);
+insert into countries
+values (1,"shahad","Asia");
+insert into users(id,full_name,email,gender,data_of_birth,country_code)
+values (1,"shahad nashi alotaibi","shahahd@hotmail.com",f,"1998",999);
+insert into orders
+values (11,11112,'start','01-11-2000 12-50-11');
+insert into products
+values (1,"shahad",100,'valid','01-11-2000 12-50-11');
+insert into order_products
+values(12,11,1);
+update countries
+set continent_name = "Europe"
+where id =1;
+delete from products where id =1;
+
+
+
+
